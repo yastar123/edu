@@ -72,6 +72,38 @@ const experiences = [
   },
 ];
 
+const monthOrder: Record<string, number> = {
+  Januari: 1,
+  Februari: 2,
+  Maret: 3,
+  April: 4,
+  Mei: 5,
+  Juni: 6,
+  Juli: 7,
+  Agustus: 8,
+  September: 9,
+  Oktober: 10,
+  November: 11,
+  Desember: 12,
+};
+
+const getDateValue = (value: string) => {
+  if (value.includes("Sekarang")) return Number.POSITIVE_INFINITY;
+
+  const parts = value.split("–").map((part) => part.trim());
+  const lastPart = parts[parts.length - 1] || "";
+  const yearMatch = lastPart.match(/(\d{4})/);
+  const year = yearMatch ? Number(yearMatch[1]) : 0;
+  const monthMatch = lastPart.match(/[A-Za-z]+/);
+  const month = monthMatch ? monthOrder[monthMatch[0]] || 1 : 1;
+
+  return year * 100 + month;
+};
+
+const sortedExperiences = [...experiences].sort(
+  (a, b) => getDateValue(b.date) - getDateValue(a.date),
+);
+
 const typeBadge: Record<string, string> = {
   Kontrak: "bg-blue-50 text-blue-700 border border-blue-200",
   Magang: "bg-emerald-50 text-emerald-700 border border-emerald-200",
@@ -94,18 +126,21 @@ export default function ExperiencePage() {
               <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
                 <Briefcase className="w-5 h-5" />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900">Pengalaman Kerja</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
+                Pengalaman Kerja
+              </h1>
             </div>
             <p className="text-slate-500 text-base max-w-xl">
-              Perjalanan profesional saya — dari magang hingga kontrak penuh sebagai Full Stack Developer.
+              Perjalanan profesional saya — dari magang hingga kontrak penuh
+              sebagai Full Stack Developer.
             </p>
           </motion.div>
 
           {/* Timeline */}
           <div className="relative border-l-2 border-slate-200 ml-4 md:ml-6 space-y-12">
-            {experiences.map((exp, idx) => (
+            {sortedExperiences.map((exp, idx) => (
               <motion.div
-                key={idx}
+                key={`${exp.title}-${idx}`}
                 initial={{ opacity: 0, x: -16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: idx * 0.07 }}
@@ -117,8 +152,12 @@ export default function ExperiencePage() {
                 <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 leading-snug">{exp.title}</h3>
-                      <p className="text-primary font-semibold text-sm mt-0.5">{exp.company}</p>
+                      <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                        {exp.title}
+                      </h3>
+                      <p className="text-primary font-semibold text-sm mt-0.5">
+                        {exp.company}
+                      </p>
                     </div>
                     <span
                       className={`text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0 ${typeBadge[exp.type] ?? "bg-slate-100 text-slate-600"}`}
@@ -140,7 +179,10 @@ export default function ExperiencePage() {
 
                   <ul className="space-y-2">
                     {exp.description.map((desc, i) => (
-                      <li key={i} className="flex gap-3 text-slate-600 text-sm leading-relaxed">
+                      <li
+                        key={i}
+                        className="flex gap-3 text-slate-600 text-sm leading-relaxed"
+                      >
                         <span className="text-primary mt-1 shrink-0">▹</span>
                         <span>{desc}</span>
                       </li>

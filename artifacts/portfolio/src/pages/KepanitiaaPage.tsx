@@ -66,6 +66,35 @@ const committees = [
   },
 ];
 
+const monthOrder: Record<string, number> = {
+  Januari: 1,
+  Februari: 2,
+  Maret: 3,
+  April: 4,
+  Mei: 5,
+  Juni: 6,
+  Juli: 7,
+  Agustus: 8,
+  September: 9,
+  Oktober: 10,
+  November: 11,
+  Desember: 12,
+};
+
+const getSortValue = (value: string) => {
+  const parts = value.split("–").map((part) => part.trim());
+  const lastPart = parts[parts.length - 1] || "";
+  const yearMatch = lastPart.match(/(\d{4})/);
+  const year = yearMatch ? Number(yearMatch[1]) : 0;
+  const monthMatch = lastPart.match(/[A-Za-z]+/);
+  const month = monthMatch ? monthOrder[monthMatch[0]] || 1 : 1;
+  return year * 100 + month;
+};
+
+const sortedCommittees = [...committees].sort(
+  (a, b) => getSortValue(b.period) - getSortValue(a.period),
+);
+
 export default function KepanitiaaPage() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -83,18 +112,21 @@ export default function KepanitiaaPage() {
               <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
                 <ClipboardList className="w-5 h-5" />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900">Kepanitiaan</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
+                Kepanitiaan
+              </h1>
             </div>
             <p className="text-slate-500 text-base max-w-xl">
-              Kontribusi nyata dalam berbagai kepanitiaan — dari pengembangan website hingga operasional teknis acara.
+              Kontribusi nyata dalam berbagai kepanitiaan — dari pengembangan
+              website hingga operasional teknis acara.
             </p>
           </motion.div>
 
           {/* Timeline */}
           <div className="relative border-l-2 border-slate-200 ml-4 md:ml-6 space-y-8">
-            {committees.map((item, idx) => (
+            {sortedCommittees.map((item, idx) => (
               <motion.div
-                key={idx}
+                key={`${item.event}-${idx}`}
                 initial={{ opacity: 0, x: -16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: idx * 0.07 }}
@@ -116,11 +148,17 @@ export default function KepanitiaaPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                     <div>
-                      <h3 className="text-base font-bold text-slate-900">{item.role}</h3>
-                      <p className={`font-semibold text-sm mt-0.5 ${item.highlight ? "text-primary" : "text-slate-600"}`}>
+                      <h3 className="text-base font-bold text-slate-900">
+                        {item.role}
+                      </h3>
+                      <p
+                        className={`font-semibold text-sm mt-0.5 ${item.highlight ? "text-primary" : "text-slate-600"}`}
+                      >
                         {item.event}
                       </p>
-                      <p className="text-slate-400 text-xs mt-0.5">{item.org}</p>
+                      <p className="text-slate-400 text-xs mt-0.5">
+                        {item.org}
+                      </p>
                     </div>
                     {item.highlight && (
                       <span className="bg-primary/10 text-primary border border-primary/20 text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0">
@@ -142,8 +180,15 @@ export default function KepanitiaaPage() {
 
                   <ul className="space-y-2">
                     {item.description.map((desc, i) => (
-                      <li key={i} className="flex gap-3 text-slate-600 text-sm leading-relaxed">
-                        <span className={`mt-1 shrink-0 ${item.highlight ? "text-primary" : "text-slate-400"}`}>▹</span>
+                      <li
+                        key={i}
+                        className="flex gap-3 text-slate-600 text-sm leading-relaxed"
+                      >
+                        <span
+                          className={`mt-1 shrink-0 ${item.highlight ? "text-primary" : "text-slate-400"}`}
+                        >
+                          ▹
+                        </span>
                         <span>{desc}</span>
                       </li>
                     ))}

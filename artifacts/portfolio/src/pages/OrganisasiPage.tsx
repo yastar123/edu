@@ -61,6 +61,38 @@ const volunteers = [
   },
 ];
 
+const monthOrder: Record<string, number> = {
+  Januari: 1,
+  Februari: 2,
+  Maret: 3,
+  April: 4,
+  Mei: 5,
+  Juni: 6,
+  Juli: 7,
+  Agustus: 8,
+  September: 9,
+  Oktober: 10,
+  November: 11,
+  Desember: 12,
+};
+
+const getSortValue = (value: string) => {
+  const parts = value.split("–").map((part) => part.trim());
+  const lastPart = parts[parts.length - 1] || "";
+  const yearMatch = lastPart.match(/(\d{4})/);
+  const year = yearMatch ? Number(yearMatch[1]) : 0;
+  const monthMatch = lastPart.match(/[A-Za-z]+/);
+  const month = monthMatch ? monthOrder[monthMatch[0]] || 1 : 1;
+  return year * 100 + month;
+};
+
+const sortedOrganisations = [...organisations].sort(
+  (a, b) => getSortValue(b.period) - getSortValue(a.period),
+);
+const sortedVolunteers = [...volunteers].sort(
+  (a, b) => getSortValue(b.period) - getSortValue(a.period),
+);
+
 export default function OrganisasiPage() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -78,10 +110,13 @@ export default function OrganisasiPage() {
               <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
                 <Users className="w-5 h-5" />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900">Organisasi</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
+                Organisasi
+              </h1>
             </div>
             <p className="text-slate-500 text-base max-w-xl">
-              Keterlibatan aktif dalam organisasi kemahasiswaan dan kegiatan sukarela.
+              Keterlibatan aktif dalam organisasi kemahasiswaan dan kegiatan
+              sukarela.
             </p>
           </motion.div>
 
@@ -92,9 +127,9 @@ export default function OrganisasiPage() {
               Organisasi Kemahasiswaan
             </h2>
             <div className="space-y-5">
-              {organisations.map((item, idx) => (
+              {sortedOrganisations.map((item, idx) => (
                 <motion.div
-                  key={idx}
+                  key={`${item.org}-${item.period}-${idx}`}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
@@ -102,8 +137,12 @@ export default function OrganisasiPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                     <div>
-                      <h3 className="text-base font-bold text-slate-900">{item.role}</h3>
-                      <p className="text-primary font-semibold text-sm mt-0.5">{item.org}</p>
+                      <h3 className="text-base font-bold text-slate-900">
+                        {item.role}
+                      </h3>
+                      <p className="text-primary font-semibold text-sm mt-0.5">
+                        {item.org}
+                      </p>
                     </div>
                     <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0">
                       Organisasi
@@ -123,7 +162,10 @@ export default function OrganisasiPage() {
 
                   <ul className="space-y-2">
                     {item.description.map((desc, i) => (
-                      <li key={i} className="flex gap-3 text-slate-600 text-sm leading-relaxed">
+                      <li
+                        key={i}
+                        className="flex gap-3 text-slate-600 text-sm leading-relaxed"
+                      >
                         <span className="text-primary mt-1 shrink-0">▹</span>
                         <span>{desc}</span>
                       </li>
@@ -141,9 +183,9 @@ export default function OrganisasiPage() {
               Sukarelawan
             </h2>
             <div className="space-y-5">
-              {volunteers.map((item, idx) => (
+              {sortedVolunteers.map((item, idx) => (
                 <motion.div
-                  key={idx}
+                  key={`${item.org}-${item.period}-${idx}`}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.08 }}
@@ -151,8 +193,12 @@ export default function OrganisasiPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                     <div>
-                      <h3 className="text-base font-bold text-slate-900">{item.role}</h3>
-                      <p className="text-accent font-semibold text-sm mt-0.5">{item.org}</p>
+                      <h3 className="text-base font-bold text-slate-900">
+                        {item.role}
+                      </h3>
+                      <p className="text-accent font-semibold text-sm mt-0.5">
+                        {item.org}
+                      </p>
                     </div>
                     <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0">
                       {item.type}
@@ -172,7 +218,10 @@ export default function OrganisasiPage() {
 
                   <ul className="space-y-2">
                     {item.description.map((desc, i) => (
-                      <li key={i} className="flex gap-3 text-slate-600 text-sm leading-relaxed">
+                      <li
+                        key={i}
+                        className="flex gap-3 text-slate-600 text-sm leading-relaxed"
+                      >
                         <span className="text-accent mt-1 shrink-0">▹</span>
                         <span>{desc}</span>
                       </li>

@@ -1,44 +1,102 @@
-import { Code2, Mail, Linkedin, Phone } from "lucide-react";
+import { Code2, Mail, Linkedin, Phone, Github } from "lucide-react";
 import { Link } from "wouter";
 
 export function Footer() {
-  return (
-    <footer className="border-t border-slate-200 bg-white py-10">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <Link href="/" className="flex items-center gap-2 text-primary font-bold text-lg">
-            <Code2 className="w-5 h-5" />
-            <span>Edu Juanda Pratama</span>
-          </Link>
+  const links = [
+    { name: "Beranda", href: "/" },
+    { name: "Experience", href: "/experience" },
+    { name: "Projects", href: "/projects" },
+    { name: "Organisasi", href: "/organisasi" },
+    { name: "Kepanitiaan", href: "/kepanitiaan" },
+  ];
 
-          <div className="flex items-center gap-4">
-            <a
-              href="mailto:yastariskandar@gmail.com"
-              className="p-2 rounded-lg text-slate-500 hover:text-primary hover:bg-slate-100 transition-colors"
-              aria-label="Email"
+  return (
+    <footer className="border-t border-slate-200 bg-white">
+      <div className="container mx-auto px-4 md:px-8 py-10 md:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+          {/* Brand */}
+          <div>
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-primary font-bold text-lg mb-3"
             >
-              <Mail className="w-4 h-4" />
-            </a>
-            <a
-              href="tel:+6285366195381"
-              className="p-2 rounded-lg text-slate-500 hover:text-primary hover:bg-slate-100 transition-colors"
-              aria-label="Phone"
-            >
-              <Phone className="w-4 h-4" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/edu-juanda-pratama-861249297/"
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 rounded-lg text-slate-500 hover:text-primary hover:bg-slate-100 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-4 h-4" />
-            </a>
+              <Code2 className="w-5 h-5" />
+              <span>Edu Juanda Pratama</span>
+            </Link>
+            <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
+              Full Stack Developer berbasis di Bandar Lampung. Membangun
+              aplikasi web yang cepat, modern, dan scalable.
+            </p>
           </div>
 
-          <p className="text-slate-400 text-sm">
-            &copy; {new Date().getFullYear()} Edu Juanda Pratama. All rights reserved.
+          {/* Nav links */}
+          <div>
+            <p className="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-4">
+              Navigasi
+            </p>
+            <ul className="space-y-2">
+              {links.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-slate-600 hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <p className="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-4">
+              Kontak
+            </p>
+            <div className="space-y-2 text-sm text-slate-600">
+              <a
+                href="mailto:yastariskandar@gmail.com"
+                className="flex items-center gap-2 hover:text-primary transition-colors"
+              >
+                <Mail className="w-4 h-4 shrink-0" />
+                yastariskandar@gmail.com
+              </a>
+              <a
+                href="tel:+6285366195381"
+                className="flex items-center gap-2 hover:text-primary transition-colors"
+              >
+                <Phone className="w-4 h-4 shrink-0" />
+                +62 853 6619 5381
+              </a>
+              <a
+                href="https://www.linkedin.com/in/edu-juanda-pratama-861249297/"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 hover:text-primary transition-colors"
+              >
+                <Linkedin className="w-4 h-4 shrink-0" />
+                LinkedIn
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 hover:text-primary transition-colors"
+              >
+                <Github className="w-4 h-4 shrink-0" />
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-slate-400 text-xs text-center sm:text-left">
+            &copy; {new Date().getFullYear()} Edu Juanda Pratama. All rights
+            reserved.
+          </p>
+          <p className="text-slate-400 text-xs">
+            Built with React · Tailwind · Framer Motion
           </p>
         </div>
       </div>

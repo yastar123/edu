@@ -1,7 +1,9 @@
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ExternalLink, FolderKanban } from "lucide-react";
+import { BackToTop } from "@/components/BackToTop";
+import { ExternalLink, FolderKanban, Search } from "lucide-react";
 
 const projects = [
   {
@@ -140,7 +142,7 @@ const projects = [
     liveUrl: "https://candidate-college.vercel.app/",
   },
   {
-    title: "Website Penerimaan Mahasiswa Baru ITERA 2024",
+    title: "Website PMB ITERA 2024",
     category: "website",
     client: "Penerimaan Mahasiswa Baru ITERA",
     year: "2024",
@@ -154,7 +156,7 @@ const projects = [
     liveUrl: "https://pplikitera.com",
   },
   {
-    title: "Website Penerimaan Mahasiswa Baru ITERA 2025",
+    title: "Website PMB ITERA 2025",
     category: "website",
     client: "Penerimaan Mahasiswa Baru ITERA",
     year: "2025",
@@ -183,8 +185,8 @@ const projects = [
     liveUrl: "https://lhpp.seyiki.com/",
   },
   {
-    title: "IoT Control - Monitoring & Kontrol Lampu & AC Kampus",
-    category: "website",
+    title: "IoT Campus Control",
+    category: "iot",
     client: "Universitas Lampung",
     year: "2024",
     description:
@@ -198,9 +200,9 @@ const projects = [
     liveUrl: "https://iot.seyiki.com/",
   },
   {
-    title: "SaaS Business Analysis - PT Meita Gudang Distribusi",
-    category: "website",
-    client: "PT Meita",
+    title: "SaaS Business Analysis",
+    category: "saas",
+    client: "PT Meita Gudang Distribusi",
     year: "2024",
     description:
       "SaaS untuk business analysis dan manajemen distribusi gudang.",
@@ -213,12 +215,12 @@ const projects = [
     liveUrl: "https://gudangdistribusi.com/home",
   },
   {
-    title: "Sistem Pencatatan SPP SMA 13 PGRI",
+    title: "Sistem Pencatatan SPP SMA",
     category: "website",
     client: "SMA 13 PGRI",
     year: "2024",
     description:
-      "Website internal pencatatan SPP untuk SMA 13 PGRI (running di localhost).",
+      "Website internal pencatatan SPP untuk SMA 13 PGRI.",
     tags: ["PHP", "MySQL"],
     gradient: "from-yellow-500 via-amber-500 to-orange-500",
     metric: "—",
@@ -228,7 +230,7 @@ const projects = [
   },
   {
     title: "Web Caffe POS (Multi-role)",
-    category: "website",
+    category: "saas",
     client: "Post Kafe",
     year: "2024",
     description:
@@ -243,7 +245,7 @@ const projects = [
   },
   {
     title: "MBG POS (Multi-role)",
-    category: "website",
+    category: "saas",
     client: "MBG",
     year: "2024",
     description:
@@ -257,7 +259,7 @@ const projects = [
     liveUrl: "https://mbg-api-server.vercel.app/login",
   },
   {
-    title: "Pemira KM ITERA 2025-2026",
+    title: "Pemira KM ITERA 2025",
     category: "website",
     client: "KM ITERA",
     year: "2025",
@@ -272,18 +274,47 @@ const projects = [
     liveUrl: "http://pemira-km-itera.my.id/",
   },
   {
-    title: "Connect Printing - Chek Kupon",
+    title: "Connect Printing — Cek Kupon",
     category: "website",
     client: "Connect Printing",
     year: "2024",
     description:
-      "Website cek kupon untuk usaha printing di Surabaya (Connect Printing).",
+      "Website cek kupon untuk usaha printing di Surabaya.",
     tags: ["Next.js", "Node.js"],
     gradient: "from-gray-500 via-slate-500 to-zinc-600",
     metric: "—",
     metricLabel: "",
     featured: false,
     image: "/portofolio-19.png",
+  },
+  {
+    title: "Desktop Bot — Auto Login & Claim",
+    category: "desktop",
+    client: "Internal Tool",
+    year: "2024",
+    description:
+      "Aplikasi desktop untuk otomatisasi login, auto-claim hadiah, dan tugas rutin lainnya.",
+    tags: ["Electron", "Node.js", "Automation"],
+    gradient: "from-gray-700 via-gray-600 to-gray-500",
+    metric: "—",
+    metricLabel: "",
+    featured: false,
+    image: "/portofolio-20.png",
+  },
+  {
+    title: "Pengumuman Kelulusan SMAN 1",
+    category: "website",
+    client: "SMA Negeri 1 Padang Gelugur",
+    year: "2024",
+    description:
+      "Website pengumuman kelulusan untuk SMA Negeri 1 Padang Gelugur.",
+    tags: ["Next.js", "TailwindCSS"],
+    gradient: "from-blue-500 via-cyan-500 to-teal-600",
+    metric: "—",
+    metricLabel: "",
+    featured: false,
+    image: "/portofolio-21.png",
+    liveUrl: "https://pengunguman-kelulusan-sma.vercel.app/",
   },
   {
     title: "Rental Alat Pesta",
@@ -301,12 +332,12 @@ const projects = [
     liveUrl: "https://rental-alat-pesta.vercel.app/",
   },
   {
-    title: "Weekly Report — Candidate College Jakarta",
+    title: "Weekly Report — Candidate College",
     category: "website",
     client: "Candidate College Jakarta",
     year: "2024",
     description:
-      "Website internal weekly report untuk usaha Candidate College di Jakarta.",
+      "Website internal weekly report untuk Candidate College Jakarta.",
     tags: ["Internal", "Next.js"],
     gradient: "from-indigo-500 via-blue-500 to-sky-500",
     metric: "—",
@@ -315,38 +346,8 @@ const projects = [
     image: "/portofolio-24.png",
   },
   {
-    title: "Desktop Bot — Auto Login & Auto Claim",
-    category: "desktop",
-    client: "Internal Tool",
-    year: "2024",
-    description:
-      "Aplikasi desktop untuk otomatisasi login, auto-claim hadiah, dan tugas rutin lainnya (internal automation tool).",
-    tags: ["Electron", "Node.js", "Automation"],
-    gradient: "from-gray-700 via-gray-600 to-gray-500",
-    metric: "—",
-    metricLabel: "",
-    featured: false,
-    image: "/portofolio-20.png",
-    liveUrl: "",
-  },
-  {
-    title: "Pengumuman Kelulusan SMA Negeri 1 Padang Gelugur",
-    category: "website",
-    client: "SMA Negeri 1 Padang Gelugur",
-    year: "2024",
-    description:
-      "Website pengumuman kelulusan untuk SMA Negeri 1 Padang Gelugur.",
-    tags: ["Next.js", "TailwindCSS"],
-    gradient: "from-blue-500 via-cyan-500 to-teal-600",
-    metric: "—",
-    metricLabel: "",
-    featured: false,
-    image: "/portofolio-21.png",
-    liveUrl: "https://pengunguman-kelulusan-sma.vercel.app/",
-  },
-  {
-    title: "AgroMonitoring - IoT Suhu & Cahaya",
-    category: "website",
+    title: "AgroMonitoring IoT",
+    category: "iot",
     client: "Agro Monitoring",
     year: "2024",
     description:
@@ -360,12 +361,12 @@ const projects = [
     liveUrl: "https://agromonitoring.onrender.com/",
   },
   {
-    title: "PT ENERGI SUMBER KEHIDUPAN MANUSIA",
+    title: "PT ENERGI SUMBER KEHIDUPAN",
     category: "website",
     client: "Company Profile",
     year: "2025",
     description:
-      "Website company profile untuk PT ENERGI SUMBER KEHIDUPAN MANUSIA dengan tampilan profesional dan informasi perusahaan yang lengkap.",
+      "Website company profile dengan tampilan profesional dan informasi perusahaan lengkap.",
     tags: ["Next.js", "TailwindCSS", "Company Profile"],
     gradient: "from-sky-500 via-cyan-500 to-blue-600",
     metric: "—",
@@ -380,7 +381,7 @@ const projects = [
     client: "Portfolio Personal",
     year: "2025",
     description:
-      "Website portfolio personal untuk Zaki Fathi Fahrizal, mahasiswa Teknik Mesin dari UNSW Sydney.",
+      "Website portfolio personal untuk mahasiswa Teknik Mesin dari UNSW Sydney.",
     tags: ["Next.js", "Portfolio", "Personal Branding"],
     gradient: "from-violet-500 via-fuchsia-500 to-pink-600",
     metric: "—",
@@ -395,7 +396,7 @@ const projects = [
     client: "Travel Agency",
     year: "2025",
     description:
-      "Website agency travel di Jakarta dengan tampilan modern untuk promosi paket wisata dan pemesanan perjalanan.",
+      "Website agency travel di Jakarta untuk promosi paket wisata dan pemesanan perjalanan.",
     tags: ["Next.js", "Travel", "Booking"],
     gradient: "from-emerald-500 via-teal-500 to-cyan-600",
     metric: "—",
@@ -406,11 +407,11 @@ const projects = [
   },
   {
     title: "Si Poljar",
-    category: "website",
-    client: "Monitoring Kualitas Udara Sekolah Real-time",
+    category: "iot",
+    client: "Monitoring Kualitas Udara",
     year: "2025",
     description:
-      "Website monitoring kualitas udara sekolah secara real-time untuk pemantauan lingkungan belajar.",
+      "Website monitoring kualitas udara sekolah secara real-time untuk pemantauan lingkungan.",
     tags: ["IoT", "Monitoring", "Real-time"],
     gradient: "from-cyan-500 via-sky-500 to-blue-600",
     metric: "—",
@@ -422,10 +423,10 @@ const projects = [
   {
     title: "E-Wallet Nickname Lookup",
     category: "website",
-    client: "Nickname Lookup",
+    client: "Lookup Utility",
     year: "2025",
     description:
-      "Website untuk menemukan nickname dari akun e-wallet dengan pencarian cepat dan mudah.",
+      "Website untuk menemukan nickname dari akun e-wallet dengan pencarian cepat.",
     tags: ["Lookup", "Utility", "Web App"],
     gradient: "from-fuchsia-500 via-pink-500 to-rose-600",
     metric: "—",
@@ -436,11 +437,11 @@ const projects = [
   },
   {
     title: "Smart Center Indonesia",
-    category: "website",
+    category: "saas",
     client: "SaaS Platform Bimbel",
     year: "2025",
     description:
-      "Website SaaS platform bimbel untuk Smart Center Indonesia dengan sistem pembelajaran dan manajemen kelas yang terstruktur.",
+      "Website SaaS platform bimbel dengan sistem pembelajaran dan manajemen kelas terstruktur.",
     tags: ["SaaS", "Bimbel", "Education"],
     gradient: "from-indigo-500 via-blue-500 to-cyan-600",
     metric: "—",
@@ -455,7 +456,7 @@ const projects = [
     client: "Agency Website",
     year: "2025",
     description:
-      "Website agency untuk Web Cipta dengan tampilan profesional untuk promosi layanan digital agency.",
+      "Website agency untuk Web Cipta dengan tampilan profesional untuk layanan digital.",
     tags: ["Agency", "Web Design", "Digital"],
     gradient: "from-orange-500 via-amber-500 to-yellow-600",
     metric: "—",
@@ -465,12 +466,12 @@ const projects = [
     liveUrl: "https://web-cipta1.vercel.app/",
   },
   {
-    title: "Pemira Himatekia ITERA 2025",
+    title: "Pemira Himatekia 2025",
     category: "website",
     client: "Himpunan Teknik Kimia ITERA",
     year: "2025",
     description:
-      "Website pemilihan ketua himpunan dan senator untuk Himpunan Teknik Kimia ITERA 2025.",
+      "Website pemilihan ketua himpunan dan senator Himatekia ITERA 2025.",
     tags: ["Election", "Student Government", "Voting"],
     gradient: "from-teal-500 via-cyan-500 to-sky-600",
     metric: "—",
@@ -485,7 +486,7 @@ const projects = [
     client: "Reading Platform",
     year: "2025",
     description:
-      "Website baca manhua, manga, dan manhwa gratis dengan koleksi lengkap dan pencarian cepat.",
+      "Website baca manhua, manga, dan manhwa gratis dengan koleksi lengkap.",
     tags: ["Reading", "Entertainment", "Web App"],
     gradient: "from-red-500 via-orange-500 to-amber-500",
     metric: "—",
@@ -511,20 +512,43 @@ const projects = [
   },
 ];
 
-const allProjects = projects;
+const FILTERS = [
+  { label: "All", value: "all" },
+  { label: "Website", value: "website" },
+  { label: "SaaS", value: "saas" },
+  { label: "IoT", value: "iot" },
+  { label: "Desktop", value: "desktop" },
+];
 
 export default function ProjectsPage() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [search, setSearch] = useState("");
+
+  const filtered = useMemo(() => {
+    return projects.filter((p) => {
+      const matchesFilter =
+        activeFilter === "all" || p.category === activeFilter;
+      const q = search.toLowerCase();
+      const matchesSearch =
+        !q ||
+        p.title.toLowerCase().includes(q) ||
+        p.client.toLowerCase().includes(q) ||
+        p.tags.some((t) => t.toLowerCase().includes(q));
+      return matchesFilter && matchesSearch;
+    });
+  }, [activeFilter, search]);
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
-      <main className="flex-grow pt-16 pb-0">
-        <div className="w-full max-w-none px-0">
+      <main className="flex-grow pt-24 pb-16">
+        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="mb-4 px-6 md:px-8"
+            className="mb-10"
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-xl">
@@ -534,79 +558,142 @@ export default function ProjectsPage() {
                 Projects
               </h1>
             </div>
-            <p className="text-slate-500 text-base max-w-xl">
+            <p className="text-slate-500 text-base max-w-xl mb-6">
               Daftar lengkap website dan aplikasi yang sudah saya kerjakan dan
               launch untuk berbagai klien.
             </p>
+
+            {/* Filters + Search */}
+            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+              <div className="flex flex-wrap gap-2">
+                {FILTERS.map((f) => (
+                  <button
+                    key={f.value}
+                    onClick={() => setActiveFilter(f.value)}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                      activeFilter === f.value
+                        ? "bg-primary text-white shadow-sm shadow-primary/20"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="relative sm:ml-auto">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Cari project..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-full bg-white focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 w-full sm:w-56 transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Count badge */}
             <div className="mt-4 inline-flex items-center gap-2 bg-primary/5 border border-primary/20 rounded-full px-4 py-1.5">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               <span className="text-primary text-sm font-semibold">
-                {projects.length} Projects
+                {filtered.length} Projects
               </span>
             </div>
           </motion.div>
 
-          {/* Projects */}
-          <section className="w-full mb-0">
-            <h2 className="text-lg font-bold text-slate-800 mb-0 px-6 md:px-8 flex items-center gap-2">
-              Projects
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-0">
-              {allProjects.map((project, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: (idx % 4) * 0.05 }}
-                  className="group bg-white border border-slate-200 border-l-0 border-t-0 rounded-none overflow-hidden hover:border-primary/30 hover:shadow-none transition-all"
-                  data-testid={`card-project-${idx}`}
-                >
-                  {/* Screenshot */}
-                  <div className="relative overflow-hidden h-44 bg-slate-100">
-                    {project.image ? (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div
-                        className={`w-full h-full bg-gradient-to-br ${project.gradient}`}
-                      />
-                    )}
-                    {/* Live URL badge */}
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-primary text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm transition-colors"
-                      >
-                        <ExternalLink className="w-3 h-3" /> Lihat
-                      </a>
-                    )}
-                  </div>
+          {/* Grid */}
+          <AnimatePresence mode="popLayout">
+            {filtered.length > 0 ? (
+              <motion.div
+                layout
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+              >
+                {filtered.map((project, idx) => (
+                  <motion.div
+                    key={project.title}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.25, delay: (idx % 4) * 0.04 }}
+                    className="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-slate-300 transition-all duration-300 flex flex-col"
+                  >
+                    {/* Screenshot */}
+                    <div className="relative overflow-hidden h-44 bg-slate-100 shrink-0">
+                      {project.image ? (
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div
+                          className={`w-full h-full bg-gradient-to-br ${project.gradient}`}
+                        />
+                      )}
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-primary text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm transition-colors opacity-0 group-hover:opacity-100"
+                        >
+                          <ExternalLink className="w-3 h-3" /> Lihat
+                        </a>
+                      )}
+                      {project.featured && (
+                        <span className="absolute top-3 left-3 bg-primary text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                          Featured
+                        </span>
+                      )}
+                    </div>
 
-                  <div className="p-5">
-                    <div className="mb-2">
-                      <h3 className="text-base font-bold text-slate-900 group-hover:text-primary transition-colors leading-snug">
+                    <div className="p-5 flex flex-col flex-grow">
+                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-primary transition-colors leading-snug mb-1">
                         {project.title}
                       </h3>
+                      <p className="text-xs text-primary/70 font-medium mb-2">
+                        {project.client}
+                      </p>
+                      <p className="text-slate-500 text-xs leading-relaxed line-clamp-3 flex-grow">
+                        {project.description}
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {project.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {project.tags.length > 3 && (
+                          <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
+                            +{project.tags.length - 3}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <p className="text-xs text-primary/70 font-medium mb-2">
-                      {project.client}
-                    </p>
-                    <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
-                      {project.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-24 text-slate-400"
+              >
+                <FolderKanban className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p className="text-lg font-medium">Tidak ada project ditemukan</p>
+                <p className="text-sm mt-1">Coba filter atau kata kunci yang lain</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

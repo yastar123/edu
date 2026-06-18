@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BackToTop } from "@/components/BackToTop";
 import { Users, Calendar, MapPin } from "lucide-react";
 
 const organisations = [
@@ -21,7 +22,7 @@ const organisations = [
     location: "Institut Teknologi Sumatera",
     description: [
       "Bertanggung jawab dalam pembuatan dan pengeditan konten visual untuk media sosial organisasi.",
-      "Mengedit video menggunakan CapCut dan Adobe Premiere Pro untuk kebutuhan promosi, dokumentasi, dan event organisasi.",
+      "Mengedit video menggunakan CapCut dan Adobe Premiere Pro untuk kebutuhan promosi dan event.",
     ],
   },
   {
@@ -44,7 +45,7 @@ const volunteers = [
     location: "Remote (WFH)",
     type: "Sukarelawan",
     description: [
-      "Membuat tugas untuk anggota tim, serta memberikan bantuan dan solusi ketika mereka menghadapi kesulitan.",
+      "Membuat tugas untuk anggota tim, serta memberikan bantuan dan solusi ketika menghadapi kesulitan.",
       "Mengembangkan dan memelihara website WordPress, termasuk kustomisasi tema dan plugin.",
     ],
   },
@@ -62,34 +63,23 @@ const volunteers = [
 ];
 
 const monthOrder: Record<string, number> = {
-  Januari: 1,
-  Februari: 2,
-  Maret: 3,
-  April: 4,
-  Mei: 5,
-  Juni: 6,
-  Juli: 7,
-  Agustus: 8,
-  September: 9,
-  Oktober: 10,
-  November: 11,
-  Desember: 12,
+  Januari: 1, Februari: 2, Maret: 3, April: 4,
+  Mei: 5, Juni: 6, Juli: 7, Agustus: 8,
+  September: 9, Oktober: 10, November: 11, Desember: 12,
 };
 
 const getSortValue = (value: string) => {
-  const parts = value.split("–").map((part) => part.trim());
-  const lastPart = parts[parts.length - 1] || "";
-  const yearMatch = lastPart.match(/(\d{4})/);
-  const year = yearMatch ? Number(yearMatch[1]) : 0;
-  const monthMatch = lastPart.match(/[A-Za-z]+/);
-  const month = monthMatch ? monthOrder[monthMatch[0]] || 1 : 1;
-  return year * 100 + month;
+  const parts = value.split("–").map((p) => p.trim());
+  const last = parts[parts.length - 1] || "";
+  const year = (last.match(/(\d{4})/) ?? [])[1] ?? "0";
+  const monthStr = (last.match(/[A-Za-z]+/) ?? [])[0] ?? "";
+  return Number(year) * 100 + (monthOrder[monthStr] || 1);
 };
 
-const sortedOrganisations = [...organisations].sort(
+const sortedOrgs = [...organisations].sort(
   (a, b) => getSortValue(b.period) - getSortValue(a.period),
 );
-const sortedVolunteers = [...volunteers].sort(
+const sortedVols = [...volunteers].sort(
   (a, b) => getSortValue(b.period) - getSortValue(a.period),
 );
 
@@ -127,45 +117,35 @@ export default function OrganisasiPage() {
               Organisasi Kemahasiswaan
             </h2>
             <div className="space-y-5">
-              {sortedOrganisations.map((item, idx) => (
+              {sortedOrgs.map((item, idx) => (
                 <motion.div
-                  key={`${item.org}-${item.period}-${idx}`}
+                  key={`${item.org}-${idx}`}
                   initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.4, delay: idx * 0.07 }}
+                  className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition-all"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                     <div>
-                      <h3 className="text-base font-bold text-slate-900">
-                        {item.role}
-                      </h3>
-                      <p className="text-primary font-semibold text-sm mt-0.5">
-                        {item.org}
-                      </p>
+                      <h3 className="text-base font-bold text-slate-900">{item.role}</h3>
+                      <p className="text-primary font-semibold text-sm mt-0.5">{item.org}</p>
                     </div>
                     <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0">
                       Organisasi
                     </span>
                   </div>
-
                   <div className="flex flex-wrap gap-4 text-sm text-slate-500 mb-4">
                     <span className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4 shrink-0" />
-                      {item.period}
+                      <Calendar className="w-4 h-4 shrink-0" />{item.period}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 shrink-0" />
-                      {item.location}
+                      <MapPin className="w-4 h-4 shrink-0" />{item.location}
                     </span>
                   </div>
-
                   <ul className="space-y-2">
                     {item.description.map((desc, i) => (
-                      <li
-                        key={i}
-                        className="flex gap-3 text-slate-600 text-sm leading-relaxed"
-                      >
+                      <li key={i} className="flex gap-3 text-slate-600 text-sm leading-relaxed">
                         <span className="text-primary mt-1 shrink-0">▹</span>
                         <span>{desc}</span>
                       </li>
@@ -183,45 +163,35 @@ export default function OrganisasiPage() {
               Sukarelawan
             </h2>
             <div className="space-y-5">
-              {sortedVolunteers.map((item, idx) => (
+              {sortedVols.map((item, idx) => (
                 <motion.div
-                  key={`${item.org}-${item.period}-${idx}`}
+                  key={`${item.org}-${idx}`}
                   initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.4, delay: idx * 0.07 }}
+                  className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition-all"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                     <div>
-                      <h3 className="text-base font-bold text-slate-900">
-                        {item.role}
-                      </h3>
-                      <p className="text-accent font-semibold text-sm mt-0.5">
-                        {item.org}
-                      </p>
+                      <h3 className="text-base font-bold text-slate-900">{item.role}</h3>
+                      <p className="text-accent font-semibold text-sm mt-0.5">{item.org}</p>
                     </div>
                     <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0">
                       {item.type}
                     </span>
                   </div>
-
                   <div className="flex flex-wrap gap-4 text-sm text-slate-500 mb-4">
                     <span className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4 shrink-0" />
-                      {item.period}
+                      <Calendar className="w-4 h-4 shrink-0" />{item.period}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 shrink-0" />
-                      {item.location}
+                      <MapPin className="w-4 h-4 shrink-0" />{item.location}
                     </span>
                   </div>
-
                   <ul className="space-y-2">
                     {item.description.map((desc, i) => (
-                      <li
-                        key={i}
-                        className="flex gap-3 text-slate-600 text-sm leading-relaxed"
-                      >
+                      <li key={i} className="flex gap-3 text-slate-600 text-sm leading-relaxed">
                         <span className="text-accent mt-1 shrink-0">▹</span>
                         <span>{desc}</span>
                       </li>
@@ -234,6 +204,7 @@ export default function OrganisasiPage() {
         </div>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

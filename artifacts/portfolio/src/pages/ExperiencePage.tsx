@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BackToTop } from "@/components/BackToTop";
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 
 const experiences = [
@@ -27,7 +28,7 @@ const experiences = [
     ],
   },
   {
-    title: "Asisten Praktikum – Pengenalan Komputer dan Software 2",
+    title: "Asisten Praktikum – PKS 2",
     company: "Institut Teknologi Sumatera",
     type: "Kontrak",
     date: "Maret – Juni 2025",
@@ -44,19 +45,19 @@ const experiences = [
     date: "Oktober 2024 – Maret 2025",
     location: "Remote (WFH)",
     description: [
-      "Memimpin divisi Frontend Developer sebagai Co-Head dengan tanggung jawab pada review dan optimisasi kode, serta debugging.",
-      "Melakukan pengujian unit secara menyeluruh untuk mencapai coverage pengujian hingga 90%, memastikan kualitas, kinerja, dan fungsionalitas kode.",
+      "Memimpin divisi Frontend Developer sebagai Co-Head dengan tanggung jawab review, optimisasi kode, dan debugging.",
+      "Melakukan pengujian unit secara menyeluruh untuk mencapai coverage hingga 90%.",
     ],
   },
   {
-    title: "Asisten Praktikum – Pengenalan Komputer dan Software 1",
+    title: "Asisten Praktikum – PKS 1",
     company: "Institut Teknologi Sumatera",
     type: "Kontrak",
     date: "Agustus – Desember 2024",
     location: "Bandar Lampung",
     description: [
       "Membantu dosen dalam proses pengajaran mata kuliah Pengenalan Komputer dan Software.",
-      "Mengajarkan keterampilan praktis kepada mahasiswa dalam penggunaan Excel dan Microsoft Word.",
+      "Mengajarkan keterampilan praktis dalam penggunaan Excel dan Microsoft Word.",
     ],
   },
   {
@@ -73,31 +74,18 @@ const experiences = [
 ];
 
 const monthOrder: Record<string, number> = {
-  Januari: 1,
-  Februari: 2,
-  Maret: 3,
-  April: 4,
-  Mei: 5,
-  Juni: 6,
-  Juli: 7,
-  Agustus: 8,
-  September: 9,
-  Oktober: 10,
-  November: 11,
-  Desember: 12,
+  Januari: 1, Februari: 2, Maret: 3, April: 4,
+  Mei: 5, Juni: 6, Juli: 7, Agustus: 8,
+  September: 9, Oktober: 10, November: 11, Desember: 12,
 };
 
 const getDateValue = (value: string) => {
   if (value.includes("Sekarang")) return Number.POSITIVE_INFINITY;
-
-  const parts = value.split("–").map((part) => part.trim());
-  const lastPart = parts[parts.length - 1] || "";
-  const yearMatch = lastPart.match(/(\d{4})/);
-  const year = yearMatch ? Number(yearMatch[1]) : 0;
-  const monthMatch = lastPart.match(/[A-Za-z]+/);
-  const month = monthMatch ? monthOrder[monthMatch[0]] || 1 : 1;
-
-  return year * 100 + month;
+  const parts = value.split("–").map((p) => p.trim());
+  const last = parts[parts.length - 1] || "";
+  const year = (last.match(/(\d{4})/) ?? [])[1] ?? "0";
+  const monthStr = (last.match(/[A-Za-z]+/) ?? [])[0] ?? "";
+  return Number(year) * 100 + (monthOrder[monthStr] || 1);
 };
 
 const sortedExperiences = [...experiences].sort(
@@ -137,22 +125,23 @@ export default function ExperiencePage() {
           </motion.div>
 
           {/* Timeline */}
-          <div className="relative border-l-2 border-slate-200 ml-4 md:ml-6 space-y-12">
+          <div className="relative border-l-2 border-slate-200 ml-4 md:ml-6 space-y-10">
             {sortedExperiences.map((exp, idx) => (
               <motion.div
                 key={`${exp.title}-${idx}`}
                 initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: idx * 0.07 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.4, delay: idx * 0.06 }}
                 className="relative pl-8 md:pl-12"
               >
                 {/* Dot */}
                 <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary shadow-sm" />
 
-                <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                      <h3 className="text-base font-bold text-slate-900 leading-snug">
                         {exp.title}
                       </h3>
                       <p className="text-primary font-semibold text-sm mt-0.5">
@@ -160,7 +149,9 @@ export default function ExperiencePage() {
                       </p>
                     </div>
                     <span
-                      className={`text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0 ${typeBadge[exp.type] ?? "bg-slate-100 text-slate-600"}`}
+                      className={`text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0 ${
+                        typeBadge[exp.type] ?? "bg-slate-100 text-slate-600"
+                      }`}
                     >
                       {exp.type}
                     </span>
@@ -195,6 +186,7 @@ export default function ExperiencePage() {
         </div>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

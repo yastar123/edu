@@ -6,82 +6,61 @@ import { Users, Calendar, MapPin } from "lucide-react";
 
 const organisations = [
   {
-    role: "Staff Kementrian Teknologi Informasi",
+    role: "Staff – Ministry of Information Technology",
     org: "Keluarga Mahasiswa ITERA (KM ITERA)",
-    period: "Maret 2025 – Januari 2026",
+    period: "March 2025 – January 2026",
     location: "Institut Teknologi Sumatera",
     description: [
-      "Mengembangkan dan melakukan redesain website KM ITERA menggunakan Laravel, ReactJS, dan InertiaJS.",
-      "Mengimplementasikan integrasi frontend-backend secara efisien dengan InertiaJS.",
+      "Developed and redesigned the KM ITERA website using Laravel, ReactJS, and InertiaJS.",
+      "Implemented efficient frontend-backend integration using InertiaJS.",
     ],
   },
   {
-    role: "Staff Divisi Desain – Departemen Media dan Informasi",
+    role: "Staff Design Division – Media & Information Department",
     org: "Himpunan Mahasiswa Teknik Fisika Aryacitya",
-    period: "Desember 2024 – Januari 2026",
+    period: "December 2024 – January 2026",
     location: "Institut Teknologi Sumatera",
     description: [
-      "Bertanggung jawab dalam pembuatan dan pengeditan konten visual untuk media sosial organisasi.",
-      "Mengedit video menggunakan CapCut dan Adobe Premiere Pro untuk kebutuhan promosi dan event.",
+      "Responsible for creating and editing visual content for the organization's social media.",
+      "Edited videos using CapCut and Adobe Premiere Pro for promotions, documentation, and events.",
     ],
   },
   {
-    role: "Staff Kementrian Teknologi Informasi",
-    org: "Kabinet KM ITERA",
-    period: "Oktober – Desember 2024",
+    role: "Staff – Ministry of Information Technology",
+    org: "KM ITERA Cabinet",
+    period: "October – December 2024",
     location: "Institut Teknologi Sumatera",
     description: [
-      "Mengembangkan website organisasi mahasiswa dengan teknologi Laravel, ReactJS, dan Statamic.",
-      "Menerjemahkan desain dari Figma menjadi website yang fungsional dan responsif.",
+      "Developed the student organization website using Laravel, ReactJS, and Statamic.",
+      "Translated Figma designs into a fully functional and responsive website.",
     ],
   },
 ];
 
 const volunteers = [
   {
-    role: "Ketua Divisi Website & WordPress Developer",
+    role: "Division Head – Website & WordPress Developer",
     org: "BidanPreneur",
-    period: "Agustus – Desember 2024",
+    period: "August – December 2024",
     location: "Remote (WFH)",
-    type: "Sukarelawan",
+    type: "Volunteer",
     description: [
-      "Membuat tugas untuk anggota tim, serta memberikan bantuan dan solusi ketika menghadapi kesulitan.",
-      "Mengembangkan dan memelihara website WordPress, termasuk kustomisasi tema dan plugin.",
+      "Created tasks for team members and provided assistance and solutions when challenges arose.",
+      "Developed and maintained a WordPress website, including theme and plugin customization.",
     ],
   },
   {
     role: "Frontend Developer",
     org: "Independent Project",
-    period: "Maret – Juni 2024",
+    period: "March – June 2024",
     location: "Remote (WFH)",
-    type: "Sukarelawan",
+    type: "Volunteer",
     description: [
-      "Mengembangkan antarmuka pengguna yang responsif dan menarik menggunakan ReactJS dan Tailwind CSS.",
-      "Memastikan kompatibilitas lintas perangkat dan browser untuk pengalaman pengguna yang mulus.",
+      "Developed responsive and visually appealing user interfaces using ReactJS and Tailwind CSS.",
+      "Ensured cross-device and cross-browser compatibility for a seamless user experience.",
     ],
   },
 ];
-
-const monthOrder: Record<string, number> = {
-  Januari: 1, Februari: 2, Maret: 3, April: 4,
-  Mei: 5, Juni: 6, Juli: 7, Agustus: 8,
-  September: 9, Oktober: 10, November: 11, Desember: 12,
-};
-
-const getSortValue = (value: string) => {
-  const parts = value.split("–").map((p) => p.trim());
-  const last = parts[parts.length - 1] || "";
-  const year = (last.match(/(\d{4})/) ?? [])[1] ?? "0";
-  const monthStr = (last.match(/[A-Za-z]+/) ?? [])[0] ?? "";
-  return Number(year) * 100 + (monthOrder[monthStr] || 1);
-};
-
-const sortedOrgs = [...organisations].sort(
-  (a, b) => getSortValue(b.period) - getSortValue(a.period),
-);
-const sortedVols = [...volunteers].sort(
-  (a, b) => getSortValue(b.period) - getSortValue(a.period),
-);
 
 export default function OrganisasiPage() {
   return (
@@ -101,23 +80,22 @@ export default function OrganisasiPage() {
                 <Users className="w-5 h-5" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
-                Organisasi
+                Organizations
               </h1>
             </div>
             <p className="text-slate-500 text-base max-w-xl">
-              Keterlibatan aktif dalam organisasi kemahasiswaan dan kegiatan
-              sukarela.
+              Active involvement in student organizations and volunteer activities.
             </p>
           </motion.div>
 
-          {/* Organisasi */}
+          {/* Student Organizations */}
           <section className="mb-14">
             <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
               <span className="w-1 h-6 bg-primary rounded-full inline-block" />
-              Organisasi Kemahasiswaan
+              Student Organizations
             </h2>
             <div className="space-y-5">
-              {sortedOrgs.map((item, idx) => (
+              {organisations.map((item, idx) => (
                 <motion.div
                   key={`${item.org}-${idx}`}
                   initial={{ opacity: 0, y: 14 }}
@@ -132,7 +110,7 @@ export default function OrganisasiPage() {
                       <p className="text-primary font-semibold text-sm mt-0.5">{item.org}</p>
                     </div>
                     <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-3 py-1 rounded-full w-fit shrink-0">
-                      Organisasi
+                      Organization
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-4 text-sm text-slate-500 mb-4">
@@ -156,14 +134,14 @@ export default function OrganisasiPage() {
             </div>
           </section>
 
-          {/* Sukarelawan */}
+          {/* Volunteer */}
           <section>
             <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
               <span className="w-1 h-6 bg-accent rounded-full inline-block" />
-              Sukarelawan
+              Volunteer
             </h2>
             <div className="space-y-5">
-              {sortedVols.map((item, idx) => (
+              {volunteers.map((item, idx) => (
                 <motion.div
                   key={`${item.org}-${idx}`}
                   initial={{ opacity: 0, y: 14 }}

@@ -10,11 +10,11 @@ export function Navbar() {
   const [location] = useLocation();
 
   const links = [
-    { name: "Beranda", href: "/" },
+    { name: "Home", href: "/" },
     { name: "Experience", href: "/experience" },
     { name: "Projects", href: "/projects" },
-    { name: "Organisasi", href: "/organisasi" },
-    { name: "Kepanitiaan", href: "/kepanitiaan" },
+    { name: "Organizations", href: "/organisasi" },
+    { name: "Committees", href: "/kepanitiaan" },
   ];
 
   useEffect(() => {
@@ -33,7 +33,6 @@ export function Navbar() {
     setIsMobileMenuOpen(false);
   }, [location]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };

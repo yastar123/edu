@@ -8,93 +8,74 @@ const experiences = [
   {
     title: "Web Developer",
     company: "Freelance",
-    type: "Kontrak",
-    date: "Januari 2026 – Sekarang",
+    type: "Contract",
+    date: "January 2026 – Present",
     location: "Remote (WFH)",
     description: [
-      "Merancang dan mengembangkan situs web responsif menggunakan framework modern.",
-      "Fokus pada kinerja, keamanan, dan pengalaman pengguna (UX) yang optimal.",
+      "Design and develop responsive websites using modern frameworks.",
+      "Focus on performance, security, and optimal user experience (UX).",
     ],
   },
   {
     title: "Full Stack Web Developer",
     company: "PT MEITA GUDANG DISTRIBUSI",
-    type: "Kontrak",
-    date: "Januari – Mei 2026",
+    type: "Contract",
+    date: "January – May 2026",
     location: "Remote (WFH)",
     description: [
-      "Membuat Website SaaS dengan ReactJS dan Golang untuk analisis bisnis distribusi.",
-      "Melakukan audit ke semua fitur dan menu di website untuk memastikan keandalan sistem.",
+      "Built a SaaS website with ReactJS and Golang for distribution business analytics.",
+      "Conducted comprehensive audits across all features and menus to ensure system reliability.",
     ],
   },
   {
-    title: "Asisten Praktikum – PKS 2",
+    title: "Lab Assistant – Computer & Software Introduction 2",
     company: "Institut Teknologi Sumatera",
-    type: "Kontrak",
-    date: "Maret – Juni 2025",
+    type: "Contract",
+    date: "March – June 2025",
     location: "Bandar Lampung",
     description: [
-      "Mendampingi dosen dalam mengajar dasar-dasar pemrograman menggunakan bahasa C++ dan Flowgorithm.",
-      "Menyusun soal latihan dan kuis untuk penguatan materi praktikum.",
+      "Assisted the lecturer in teaching programming fundamentals using C++ and Flowgorithm.",
+      "Prepared practice exercises and quizzes to reinforce lab course material.",
     ],
   },
   {
     title: "Co-Head Division – Frontend Developer",
     company: "Candidate College",
-    type: "Magang",
-    date: "Oktober 2024 – Maret 2025",
+    type: "Internship",
+    date: "October 2024 – March 2025",
     location: "Remote (WFH)",
     description: [
-      "Memimpin divisi Frontend Developer sebagai Co-Head dengan tanggung jawab review, optimisasi kode, dan debugging.",
-      "Melakukan pengujian unit secara menyeluruh untuk mencapai coverage hingga 90%.",
+      "Led the Frontend Developer division as Co-Head, responsible for code review, optimization, and debugging.",
+      "Conducted comprehensive unit testing to achieve up to 90% test coverage, ensuring code quality, performance, and functionality.",
     ],
   },
   {
-    title: "Asisten Praktikum – PKS 1",
+    title: "Lab Assistant – Computer & Software Introduction 1",
     company: "Institut Teknologi Sumatera",
-    type: "Kontrak",
-    date: "Agustus – Desember 2024",
+    type: "Contract",
+    date: "August – December 2024",
     location: "Bandar Lampung",
     description: [
-      "Membantu dosen dalam proses pengajaran mata kuliah Pengenalan Komputer dan Software.",
-      "Mengajarkan keterampilan praktis dalam penggunaan Excel dan Microsoft Word.",
+      "Assisted the lecturer in the Computer and Software Introduction course.",
+      "Taught students practical skills in Excel and Microsoft Word.",
     ],
   },
   {
     title: "Full Stack Developer",
     company: "PT. Winnicode Garuda Indonesia",
-    type: "Magang",
-    date: "Agustus – September 2024",
+    type: "Internship",
+    date: "August – September 2024",
     location: "Remote (WFH)",
     description: [
-      "Merancang dan membangun situs portal berita menggunakan Next.js dan PostgreSQL.",
-      "Bertanggung jawab atas pengembangan front-end dan back-end untuk pengalaman pengguna yang mulus.",
+      "Designed and built a news portal website using Next.js and PostgreSQL.",
+      "Responsible for both frontend and backend development to deliver a seamless user experience.",
     ],
   },
 ];
 
-const monthOrder: Record<string, number> = {
-  Januari: 1, Februari: 2, Maret: 3, April: 4,
-  Mei: 5, Juni: 6, Juli: 7, Agustus: 8,
-  September: 9, Oktober: 10, November: 11, Desember: 12,
-};
-
-const getDateValue = (value: string) => {
-  if (value.includes("Sekarang")) return Number.POSITIVE_INFINITY;
-  const parts = value.split("–").map((p) => p.trim());
-  const last = parts[parts.length - 1] || "";
-  const year = (last.match(/(\d{4})/) ?? [])[1] ?? "0";
-  const monthStr = (last.match(/[A-Za-z]+/) ?? [])[0] ?? "";
-  return Number(year) * 100 + (monthOrder[monthStr] || 1);
-};
-
-const sortedExperiences = [...experiences].sort(
-  (a, b) => getDateValue(b.date) - getDateValue(a.date),
-);
-
 const typeBadge: Record<string, string> = {
-  Kontrak: "bg-blue-50 text-blue-700 border border-blue-200",
-  Magang: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+  Contract: "bg-blue-50 text-blue-700 border border-blue-200",
+  Internship: "bg-emerald-50 text-emerald-700 border border-emerald-200",
 };
 
 export default function ExperiencePage() {
@@ -115,18 +96,17 @@ export default function ExperiencePage() {
                 <Briefcase className="w-5 h-5" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
-                Pengalaman Kerja
+                Work Experience
               </h1>
             </div>
             <p className="text-slate-500 text-base max-w-xl">
-              Perjalanan profesional saya — dari magang hingga kontrak penuh
-              sebagai Full Stack Developer.
+              My professional journey — from internships to full contracts as a Full Stack Developer.
             </p>
           </motion.div>
 
           {/* Timeline */}
           <div className="relative border-l-2 border-slate-200 ml-4 md:ml-6 space-y-10">
-            {sortedExperiences.map((exp, idx) => (
+            {experiences.map((exp, idx) => (
               <motion.div
                 key={`${exp.title}-${idx}`}
                 initial={{ opacity: 0, x: -16 }}

@@ -22,7 +22,7 @@ export function Contact() {
             transition={{ delay: 0.1 }}
             className="text-slate-500 mb-10 max-w-xl mx-auto leading-relaxed"
           >
-            Saya tersedia untuk pekerjaan freelance maupun full-time. Jika kamu mencari developer yang bisa diandalkan dan menghasilkan kualitas terbaik, mari berdiskusi.
+            I'm available for freelance and full-time work. If you're looking for a reliable developer who delivers top-quality results, let's talk.
           </motion.p>
 
           <motion.div

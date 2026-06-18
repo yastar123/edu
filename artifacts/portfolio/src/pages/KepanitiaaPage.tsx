@@ -6,84 +6,66 @@ import { ClipboardList, Calendar, MapPin } from "lucide-react";
 
 const committees = [
   {
-    role: "Kepala Divisi Imtek (Implementasi Teknologi)",
+    role: "Head of Technology Implementation Division",
     event: "PEMIRA KM ITERA 2025",
     org: "Keluarga Mahasiswa ITERA",
     period: "2025",
     location: "Institut Teknologi Sumatera",
     description: [
-      "Bertanggung jawab untuk membuat website e-voting pemilihan presiden mahasiswa.",
-      "Berkoordinasi dengan 2 sub divisi voting dan pusat data untuk memastikan kelancaran proses voting.",
+      "Responsible for building the e-voting website for the student presidential election.",
+      "Coordinated two sub-divisions (voting and data center) to ensure smooth voting operations throughout the event.",
     ],
     highlight: true,
   },
   {
-    role: "KaSub Frontend Developer",
-    event: "PPLK ITERA 2025",
+    role: "Sub-Head of Frontend Developer Division",
+    event: "PPLK ITERA 2025 (Student Orientation Program)",
     org: "Institut Teknologi Sumatera",
-    period: "Juni – Agustus 2025",
+    period: "June – August 2025",
     location: "Bandar Lampung",
     description: [
-      "Memimpin dan mengoordinasi tim Frontend Developer dalam pengembangan website PPLK 2025.",
-      "Melakukan troubleshooting serta perbaikan bug/error yang dialami oleh anggota tim secara cepat.",
+      "Led and coordinated the Frontend Developer team in developing the PPLK 2025 event website.",
+      "Performed troubleshooting and bug fixes for team members quickly and effectively.",
     ],
     highlight: true,
   },
   {
-    role: "Staff Divisi Frontend Developer",
-    event: "PPLK ITERA 2024",
+    role: "Staff – Frontend Developer Division",
+    event: "PPLK ITERA 2024 (Student Orientation Program)",
     org: "Institut Teknologi Sumatera",
-    period: "Juni – Agustus 2024",
+    period: "June – August 2024",
     location: "Bandar Lampung",
     description: [
-      "Menerjemahkan desain Figma dari divisi VVD menjadi halaman web fungsional.",
-      "Mengembangkan komponen interaktif untuk meningkatkan interaktivitas halaman web.",
+      "Translated Figma designs from the Visual & Virtual Development division into functional web pages.",
+      "Developed interactive components to enhance website interactivity.",
     ],
     highlight: false,
   },
   {
-    role: "Staff Divisi Voting",
+    role: "Staff – Voting Division",
     event: "PEMIRA KM ITERA 2024",
     org: "Keluarga Mahasiswa ITERA",
     period: "2024",
     location: "Institut Teknologi Sumatera",
     description: [
-      "Bertanggung jawab untuk melakukan absensi kepada mahasiswa yang berpartisipasi dalam pemilihan.",
-      "Menggunakan website IMTEK untuk mencatat kehadiran dan memastikan data tersimpan akurat.",
+      "Responsible for checking attendance of students participating in the student presidential election.",
+      "Used the IMTEK division's website to record attendance and ensure data was stored accurately.",
     ],
     highlight: false,
   },
   {
-    role: "Staff Divisi Kreatif",
-    event: "First Gathering Teknik Fisika 2024",
+    role: "Staff – Creative Division",
+    event: "First Gathering — Physics Engineering 2024",
     org: "Himpunan Mahasiswa Teknik Fisika Aryacitya",
     period: "2024",
     location: "Institut Teknologi Sumatera",
     description: [
-      "Bertanggung jawab dalam pembuatan desain logo acara dalam format tiga dimensi (3D).",
-      "Menggunakan perangkat lunak desain grafis untuk menghasilkan visualisasi yang kreatif.",
+      "Designed the 3D event logo for the First Gathering of the Physics Engineering department.",
+      "Used graphic design software to produce creative and visually compelling logo visualizations.",
     ],
     highlight: false,
   },
 ];
-
-const monthOrder: Record<string, number> = {
-  Januari: 1, Februari: 2, Maret: 3, April: 4,
-  Mei: 5, Juni: 6, Juli: 7, Agustus: 8,
-  September: 9, Oktober: 10, November: 11, Desember: 12,
-};
-
-const getSortValue = (value: string) => {
-  const parts = value.split("–").map((p) => p.trim());
-  const last = parts[parts.length - 1] || "";
-  const year = (last.match(/(\d{4})/) ?? [])[1] ?? "0";
-  const monthStr = (last.match(/[A-Za-z]+/) ?? [])[0] ?? "";
-  return Number(year) * 100 + (monthOrder[monthStr] || 1);
-};
-
-const sortedCommittees = [...committees].sort(
-  (a, b) => getSortValue(b.period) - getSortValue(a.period),
-);
 
 export default function KepanitiaaPage() {
   return (
@@ -103,18 +85,17 @@ export default function KepanitiaaPage() {
                 <ClipboardList className="w-5 h-5" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
-                Kepanitiaan
+                Committees
               </h1>
             </div>
             <p className="text-slate-500 text-base max-w-xl">
-              Kontribusi nyata dalam berbagai kepanitiaan — dari pengembangan
-              website hingga operasional teknis acara.
+              Real contributions across various committees — from website development to technical event operations.
             </p>
           </motion.div>
 
           {/* Timeline */}
           <div className="relative border-l-2 border-slate-200 ml-4 md:ml-6 space-y-8">
-            {sortedCommittees.map((item, idx) => (
+            {committees.map((item, idx) => (
               <motion.div
                 key={`${item.event}-${idx}`}
                 initial={{ opacity: 0, x: -16 }}

@@ -3,11 +3,11 @@ import { Link } from "wouter";
 
 export function Footer() {
   const links = [
-    { name: "Beranda", href: "/" },
+    { name: "Home", href: "/" },
     { name: "Experience", href: "/experience" },
     { name: "Projects", href: "/projects" },
-    { name: "Organisasi", href: "/organisasi" },
-    { name: "Kepanitiaan", href: "/kepanitiaan" },
+    { name: "Organizations", href: "/organisasi" },
+    { name: "Committees", href: "/kepanitiaan" },
   ];
 
   return (
@@ -24,15 +24,14 @@ export function Footer() {
               <span>Edu Juanda Pratama</span>
             </Link>
             <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
-              Full Stack Developer berbasis di Bandar Lampung. Membangun
-              aplikasi web yang cepat, modern, dan scalable.
+              Full Stack Developer based in Bandar Lampung. Building fast, modern, and scalable web applications.
             </p>
           </div>
 
           {/* Nav links */}
           <div>
             <p className="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-4">
-              Navigasi
+              Navigation
             </p>
             <ul className="space-y-2">
               {links.map((link) => (
@@ -51,7 +50,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <p className="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-4">
-              Kontak
+              Contact
             </p>
             <div className="space-y-2 text-sm text-slate-600">
               <a
@@ -92,8 +91,7 @@ export function Footer() {
 
         <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-slate-400 text-xs text-center sm:text-left">
-            &copy; {new Date().getFullYear()} Edu Juanda Pratama. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} Edu Juanda Pratama. All rights reserved.
           </p>
           <p className="text-slate-400 text-xs">
             Built with React · Tailwind · Framer Motion

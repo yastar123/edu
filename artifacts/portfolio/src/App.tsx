@@ -4,6 +4,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
+import ExperiencePage from "@/pages/ExperiencePage";
+import ProjectsPage from "@/pages/ProjectsPage";
+import OrganisasiPage from "@/pages/OrganisasiPage";
+import KepanitiaaPage from "@/pages/KepanitiaaPage";
 
 const queryClient = new QueryClient();
 
@@ -11,6 +15,10 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/experience" component={ExperiencePage} />
+      <Route path="/projects" component={ProjectsPage} />
+      <Route path="/organisasi" component={OrganisasiPage} />
+      <Route path="/kepanitiaan" component={KepanitiaaPage} />
       <Route component={NotFound} />
     </Switch>
   );

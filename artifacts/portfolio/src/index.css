@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
-
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -46,30 +44,30 @@
 }
 
 :root {
-  --background: 210 20% 98%;
-  --foreground: 220 40% 10%;
-  --border: 220 15% 90%;
-  --input: 220 15% 90%;
-  --ring: 220 80% 50%;
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 221 83% 53%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 220 40% 10%;
-  --card-border: 220 15% 90%;
+  --card: 210 40% 98%;
+  --card-foreground: 222 47% 11%;
+  --card-border: 214 32% 91%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 220 40% 10%;
-  --popover-border: 220 15% 90%;
+  --popover-foreground: 222 47% 11%;
+  --popover-border: 214 32% 91%;
 
-  --primary: 220 80% 50%;
+  --primary: 221 83% 53%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 220 15% 94%;
-  --secondary-foreground: 220 40% 10%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
 
-  --muted: 220 15% 94%;
-  --muted-foreground: 220 20% 40%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 20% 45%;
 
-  --accent: 190 90% 40%;
+  --accent: 199 89% 48%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84% 60%;
@@ -80,45 +78,13 @@
   --radius: 0.5rem;
 }
 
-.dark {
-  --background: 220 40% 4%;
-  --foreground: 210 20% 98%;
-  --border: 220 20% 15%;
-  --input: 220 20% 15%;
-  --ring: 185 85% 55%;
-
-  --card: 220 35% 8%;
-  --card-foreground: 210 20% 98%;
-  --card-border: 220 20% 15%;
-
-  --popover: 220 35% 8%;
-  --popover-foreground: 210 20% 98%;
-  --popover-border: 220 20% 15%;
-
-  --primary: 185 85% 55%;
-  --primary-foreground: 220 40% 4%;
-
-  --secondary: 220 20% 15%;
-  --secondary-foreground: 210 20% 98%;
-
-  --muted: 220 20% 15%;
-  --muted-foreground: 220 10% 60%;
-
-  --accent: 190 90% 45%;
-  --accent-foreground: 220 40% 4%;
-
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 20% 98%;
-}
-
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
+    @apply font-sans antialiased bg-background text-foreground;
   }
-  
   html {
     scroll-behavior: smooth;
   }

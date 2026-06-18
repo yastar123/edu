@@ -2,68 +2,74 @@ import { motion } from "framer-motion";
 
 export function About() {
   return (
-    <section id="about" className="py-24 md:py-32 bg-secondary/30 relative">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section id="about" className="py-24 md:py-32 bg-slate-50">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-8">
-              About Me
-            </h2>
-            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-slate-900">About Me</h2>
+            <div className="space-y-5 text-slate-600 leading-relaxed">
               <p>
-                Full Stack Developer with expertise in building applications from start to finish. I pride myself on being a fast learner with new technologies and always prioritizing efficient, scalable solutions.
+                Full Stack Developer dengan keahlian membangun aplikasi dari awal hingga selesai. Saya dikenal sebagai fast learner yang selalu mengutamakan solusi efisien dan scalable.
               </p>
               <p>
-                Having shipped over 20 production projects for various clients, I understand that great engineering isn't just about clean code—it's about solving real business problems and delivering seamless user experiences.
+                Dengan lebih dari 20 proyek produksi yang telah diluncurkan untuk berbagai klien, saya memahami bahwa rekayasa perangkat lunak yang baik bukan hanya soal kode yang bersih — melainkan soal memecahkan masalah bisnis nyata dan menghadirkan pengalaman pengguna yang mulus.
               </p>
               <p>
-                Whether it's architecting a complex backend, integrating intricate APIs, or crafting a pixel-perfect frontend, I take ownership of the entire product lifecycle.
+                Dari arsitektur backend yang kompleks, integrasi API, hingga tampilan frontend yang presisi — saya mengambil kepemilikan penuh atas seluruh siklus hidup produk.
               </p>
             </div>
-            
-            <div className="mt-10 grid grid-cols-2 gap-8 pt-8 border-t border-border">
+
+            <div className="mt-10 grid grid-cols-2 gap-8 pt-8 border-t border-slate-200">
               <div>
-                <h4 className="font-mono text-sm text-primary uppercase tracking-wider mb-2">Location</h4>
-                <p className="font-medium">Bandar Lampung, ID</p>
+                <h4 className="font-mono text-xs text-primary uppercase tracking-wider mb-1.5">Lokasi</h4>
+                <p className="font-semibold text-slate-800 text-sm">Bandar Lampung, ID</p>
               </div>
               <div>
-                <h4 className="font-mono text-sm text-primary uppercase tracking-wider mb-2">Languages</h4>
-                <p className="font-medium">Indonesian (Native)<br/>English (Intermediate)</p>
+                <h4 className="font-mono text-xs text-primary uppercase tracking-wider mb-1.5">Bahasa</h4>
+                <p className="font-semibold text-slate-800 text-sm">Indonesia (Ahli)<br />Inggris (Menengah)</p>
               </div>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="relative"
           >
-            <div className="aspect-[4/5] bg-card border border-border rounded-2xl p-8 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <div className="h-full flex flex-col justify-between relative z-10">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="text-primary font-mono font-bold text-xl">20+</span>
-                  </div>
-                  <h3 className="text-2xl font-bold">Projects Shipped</h3>
-                  <p className="text-muted-foreground">From landing pages to complex SaaS platforms and enterprise management systems.</p>
+            <div className="grid grid-cols-2 gap-5">
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <span className="text-primary font-mono font-bold text-lg">20+</span>
                 </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-1.5">Projects Shipped</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">Dari landing page hingga platform SaaS dan sistem enterprise.</p>
+              </div>
 
-                <div className="space-y-4 pt-8 border-t border-border">
-                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                    <span className="text-accent font-mono font-bold text-xl">3</span>
-                  </div>
-                  <h3 className="text-2xl font-bold">Years Experience</h3>
-                  <p className="text-muted-foreground">Continuous learning and professional delivery across freelance and contract roles.</p>
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div className="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
+                  <span className="text-accent font-mono font-bold text-lg">3+</span>
                 </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-1.5">Years Experience</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">Belajar berkelanjutan di berbagai peran freelance dan kontrak.</p>
+              </div>
+
+              <div className="bg-primary col-span-2 rounded-2xl p-6 shadow-sm shadow-primary/20">
+                <h3 className="text-white font-bold text-lg mb-2">Siap Untuk Proyek Baru</h3>
+                <p className="text-primary-foreground/80 text-sm leading-relaxed">
+                  Tersedia untuk kolaborasi freelance, kontrak jangka pendek maupun panjang.
+                </p>
+                <a
+                  href="mailto:yastariskandar@gmail.com"
+                  className="mt-4 inline-block text-sm font-semibold text-white underline underline-offset-4 hover:no-underline transition-all"
+                >
+                  Hubungi Saya →
+                </a>
               </div>
             </div>
           </motion.div>

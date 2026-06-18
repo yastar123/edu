@@ -3,66 +3,70 @@ import { Mail, Phone, Linkedin, MapPin } from "lucide-react";
 
 export function Contact() {
   return (
-    <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[100px] mix-blend-screen" />
-      </div>
-
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="max-w-4xl mx-auto bg-card border border-border rounded-3xl p-8 md:p-16 text-center shadow-2xl">
-          <motion.h2 
+    <section id="contact" className="py-24 md:py-32 bg-slate-50">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="max-w-3xl mx-auto bg-white border border-slate-200 rounded-3xl p-8 md:p-14 text-center shadow-sm">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-bold mb-6"
+            className="text-3xl md:text-4xl font-bold mb-4 text-slate-900"
           >
             Let's Build Something Great
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto"
+            className="text-slate-500 mb-10 max-w-xl mx-auto leading-relaxed"
           >
-            I'm currently available for freelance work and full-time opportunities. If you're looking for a developer who takes ownership and delivers quality, let's talk.
+            Saya tersedia untuk pekerjaan freelance maupun full-time. Jika kamu mencari developer yang bisa diandalkan dan menghasilkan kualitas terbaik, mari berdiskusi.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="flex flex-col md:flex-row justify-center items-center gap-6"
+            className="flex flex-col sm:flex-row justify-center items-center gap-4"
           >
-            <a 
+            <a
               href="mailto:yastariskandar@gmail.com"
-              className="flex items-center gap-3 w-full md:w-auto bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:bg-primary/90 transition-colors"
+              data-testid="link-email"
+              className="flex items-center gap-2.5 w-full sm:w-auto bg-primary text-white px-7 py-3.5 rounded-full font-semibold hover:bg-primary/90 transition-colors shadow-md shadow-primary/20 text-sm"
             >
-              <Mail className="w-5 h-5" /> yastariskandar@gmail.com
+              <Mail className="w-4 h-4" /> yastariskandar@gmail.com
             </a>
-            
-            <a 
+
+            <a
               href="tel:+6285366195381"
-              className="flex items-center gap-3 w-full md:w-auto bg-secondary text-secondary-foreground px-8 py-4 rounded-full font-bold hover:bg-secondary/80 transition-colors"
+              data-testid="link-phone"
+              className="flex items-center gap-2.5 w-full sm:w-auto bg-slate-100 text-slate-700 px-7 py-3.5 rounded-full font-semibold hover:bg-slate-200 transition-colors text-sm"
             >
-              <Phone className="w-5 h-5" /> +62 853 6619 5381
+              <Phone className="w-4 h-4" /> +62 853 6619 5381
             </a>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="mt-12 pt-8 border-t border-border flex flex-wrap justify-center gap-8 text-muted-foreground font-medium"
+            className="mt-10 pt-8 border-t border-slate-100 flex flex-wrap justify-center gap-8 text-slate-500 text-sm font-medium"
           >
-            <a href="https://www.linkedin.com/in/edu-juanda-pratama-861249297/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors">
-              <Linkedin className="w-5 h-5" /> LinkedIn
+            <a
+              href="https://www.linkedin.com/in/edu-juanda-pratama-861249297/"
+              target="_blank"
+              rel="noreferrer"
+              data-testid="link-linkedin"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <Linkedin className="w-4 h-4" /> LinkedIn
             </a>
             <div className="flex items-center gap-2">
-              <MapPin className="w-5 h-5" /> Bandar Lampung, Indonesia
+              <MapPin className="w-4 h-4" /> Bandar Lampung, Indonesia
             </div>
           </motion.div>
         </div>
